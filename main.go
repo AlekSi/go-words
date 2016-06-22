@@ -26,7 +26,7 @@ var (
 	}
 
 	// https://golang.org/pkg/builtin/
-	builtin = []string{
+	builtins = []string{
 		"true", "false", "iota", "nil",
 		"append", "cap", "close", "complex", "copy", "delete", "imag",
 		"len", "make", "new", "panic", "print", "println", "real", "recover",
@@ -34,6 +34,10 @@ var (
 		"int", "int16", "int32", "int64", "int8",
 		"rune", "string",
 		"uint", "uint16", "uint32", "uint64", "uint8", "uintptr",
+	}
+
+	extra = []string{
+		"omitempty", // popular tag value in std
 	}
 )
 
@@ -114,9 +118,10 @@ func main() {
 	flag.Parse()
 	log.SetFlags(log.Lshortfile)
 
-	// add keywords and builtin
+	// add keywords, builtins and some extra words
 	addWords(keywords...)
-	addWords(builtin...)
+	addWords(builtins...)
+	addWords(extra...)
 
 	// get std packages
 	cmd := exec.Command("go", "list", "std")
@@ -139,6 +144,8 @@ func main() {
 			continue
 		}
 		debugf("processing package %q", pack.ImportPath)
+
+		addWords(pack.Name)
 
 		fset := token.NewFileSet()
 		for _, f := range pack.GoFiles {
