@@ -38,6 +38,8 @@ var (
 
 	extra = []string{
 		"omitempty", // popular tag value in std
+		"gopath", "goroot",
+		"goroutine", "goroutines",
 	}
 )
 
