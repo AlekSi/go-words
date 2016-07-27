@@ -10,14 +10,15 @@ import (
 	"log"
 	"os/exec"
 	"path/filepath"
-	"regexp"
 	"sort"
 	"strings"
 )
 
 var (
+	Words = make(map[string]struct{}, 7000)
+
 	// https://golang.org/ref/spec#Keywords
-	keywords = []string{
+	Keywords = []string{
 		"break", "default", "func", "interface", "select",
 		"case", "defer", "go", "map", "struct",
 		"chan", "else", "goto", "package", "switch",
@@ -26,7 +27,7 @@ var (
 	}
 
 	// https://golang.org/pkg/builtin/
-	builtins = []string{
+	Builtins = []string{
 		"true", "false", "iota", "nil",
 		"append", "cap", "close", "complex", "copy", "delete", "imag",
 		"len", "make", "new", "panic", "print", "println", "real", "recover",
@@ -36,7 +37,7 @@ var (
 		"uint", "uint16", "uint32", "uint64", "uint8", "uintptr",
 	}
 
-	extra = []string{
+	Extra = []string{
 		"omitempty", // popular tag value in std
 		"gopath", "goroot",
 		"goroutine", "goroutines",
@@ -44,11 +45,8 @@ var (
 )
 
 var (
-	Words   = make(map[string]struct{}, 1000)
-	wordsRE = regexp.MustCompile(`^([[:alpha:]]+)`)
+	DebugF = flag.Bool("debug", false, "Enable debug output")
 )
-
-var DebugF = flag.Bool("debug", false, "Enable debug output")
 
 func debugf(format string, v ...interface{}) {
 	if *DebugF {
@@ -56,16 +54,10 @@ func debugf(format string, v ...interface{}) {
 	}
 }
 
-// addWords adds words to Words map, stripping non-alpha suffixes.
-// For example, "uint8" and "uint16" both result in "uint".
+// addWords adds words to Words map.
 func addWords(words ...string) {
-	var m []string
 	for _, w := range words {
-		m = wordsRE.FindStringSubmatch(w)
-		if len(m) > 1 {
-			debugf("adding %q", m[1])
-			Words[m[1]] = struct{}{}
-		}
+		Words[w] = struct{}{}
 	}
 }
 
@@ -76,7 +68,7 @@ func processIdent(ident *ast.Ident) {
 	}
 
 	if strings.Contains(ident.Name, ".") {
-		log.Fatal("unhandled ident %q", ident.Name)
+		log.Fatalf("unhandled ident %q", ident.Name)
 	}
 
 	if ast.IsExported(ident.Name) {
@@ -121,9 +113,9 @@ func main() {
 	log.SetFlags(log.Lshortfile)
 
 	// add keywords, builtins and some extra words
-	addWords(keywords...)
-	addWords(builtins...)
-	addWords(extra...)
+	addWords(Keywords...)
+	addWords(Builtins...)
+	addWords(Extra...)
 
 	// get std packages
 	cmd := exec.Command("go", "list", "std")
@@ -160,6 +152,7 @@ func main() {
 	}
 
 	// sort and print result
+	log.Printf("found %d words", len(Words))
 	res := make([]string, 0, len(Words))
 	for w := range Words {
 		res = append(res, w)
