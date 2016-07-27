@@ -41,6 +41,12 @@ var (
 		"omitempty", // popular tag value in std
 		"gopath", "goroot",
 		"goroutine", "goroutines",
+
+		// build tags
+		"386", "amd64", "amd64p32", "arm", "arm64", "mips64", "mips64le", "ppc64", "ppc64le", // okgoarch
+		"darwin", "dragonfly", "linux", "android", "solaris", "freebsd", "nacl", "netbsd", "openbsd", "plan9", "windows", // okgoos
+		"gc", "gcc", "cgo",
+		"go1.1", "go1.2", "go1.3", "go1.4", "go1.5", "go1.6", "go1.7",
 	}
 )
 
