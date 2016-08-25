@@ -145,6 +145,7 @@ func main() {
 		}
 		debugf("processing package %q", pack.ImportPath)
 
+		addWords(strings.Split(pack.ImportPath, "/")...)
 		addWords(pack.Name)
 
 		fset := token.NewFileSet()

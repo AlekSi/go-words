@@ -6177,6 +6177,7 @@ amd64
 amd64p32
 android
 append
+archive
 arm
 arm64
 ascii85
@@ -6206,8 +6207,10 @@ color
 complex
 complex128
 complex64
+compress
 const
 constant
+container
 context
 continue
 cookiejar
@@ -6217,6 +6220,7 @@ crc64
 crypto
 csv
 darwin
+database
 debug
 default
 defer
@@ -6265,6 +6269,7 @@ go1.6
 go1.7
 gob
 golang
+golang_org
 gopath
 gopkg
 goroot
@@ -6280,6 +6285,7 @@ hmac
 hpack
 html
 http
+http2
 httplex
 httptest
 httptrace
@@ -6289,6 +6295,7 @@ imag
 image
 import
 importer
+index
 int
 int16
 int32
@@ -6303,6 +6310,7 @@ jpeg
 json
 jsonrpc
 len
+lex
 linux
 list
 log
@@ -6385,6 +6393,7 @@ tabwriter
 tar
 template
 testing
+text
 textproto
 time
 tls
@@ -6406,7 +6415,9 @@ user
 utf16
 utf8
 var
+vendor
 windows
+x
 x509
 xml
 zip
