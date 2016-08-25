@@ -6264,7 +6264,9 @@ go1.5
 go1.6
 go1.7
 gob
+golang
 gopath
+gopkg
 goroot
 goroutine
 goroutines

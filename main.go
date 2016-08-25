@@ -38,6 +38,8 @@ var (
 	}
 
 	Extra = []string{
+		"golang",
+		"gopkg",     // gopkg.in
 		"omitempty", // popular tag value in std
 		"gopath", "goroot",
 		"goroutine", "goroutines",
