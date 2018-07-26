@@ -43,10 +43,13 @@ var (
 		"omitempty", // popular tag value in std
 		"gopath", "goroot",
 		"goroutine", "goroutines",
-		"386", "amd64", "amd64p32", "arm", "arm64", "mips64", "mips64le", "ppc64", "ppc64le", // GOARCH
-		"darwin", "dragonfly", "linux", "android", "solaris", "freebsd", "nacl", "netbsd", "openbsd", "plan9", "windows", // GOOS
+
+		// https://github.com/golang/go/blob/master/src/cmd/dist/build.go
+		"386", "amd64", "amd64p32", "arm", "arm64", "mips", "mipsle", "mips64", "mips64le", "ppc64", "ppc64le", "riscv64", "s390x", "wasm", // GOARCH
+		"darwin", "dragonfly", "js", "linux", "android", "solaris", "freebsd", "nacl", "netbsd", "openbsd", "plan9", "windows", // GOOS
+
 		"gc", "gccgo", "gcc", "cgo",
-		"go1.1", "go1.2", "go1.3", "go1.4", "go1.5", "go1.6", "go1.7", "go1.8", "go1.9", "go1.10",
+		"go1.1", "go1.2", "go1.3", "go1.4", "go1.5", "go1.6", "go1.7", "go1.8", "go1.9", "go1.10", "go1.11",
 	}
 )
 
