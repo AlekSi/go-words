@@ -135,16 +135,14 @@ func main() {
 	for _, p := range packages {
 		pack, err := build.Import(p, "", 0)
 		if err != nil {
+			if strings.HasPrefix(p, "vendor/") || strings.Contains(p, "/internal/") {
+				debugf("skipping package %q", p)
+				continue
+			}
 			log.Fatal(err)
 		}
 
-		// skip internal packages like "internal/trace" or "net/http/internal"
-		if strings.Contains(pack.ImportPath, "internal") {
-			debugf("skipping internal package %q", pack.ImportPath)
-			continue
-		}
 		debugf("processing package %q", pack.ImportPath)
-
 		addWords(strings.Split(pack.ImportPath, "/")...)
 		addWords(pack.Name)
 
