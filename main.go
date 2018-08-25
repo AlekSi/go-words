@@ -136,12 +136,12 @@ func main() {
 
 	// process packages
 	for _, p := range packages {
+		if strings.HasPrefix(p, "vendor/") || strings.Contains(p, "/internal/") {
+			debugf("skipping package %q", p)
+			continue
+		}
 		pack, err := build.Import(p, "", 0)
 		if err != nil {
-			if strings.HasPrefix(p, "vendor/") || strings.Contains(p, "/internal/") {
-				debugf("skipping package %q", p)
-				continue
-			}
 			log.Fatal(err)
 		}
 
