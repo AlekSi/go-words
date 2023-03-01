@@ -35,6 +35,7 @@ var (
 		"int", "int16", "int32", "int64", "int8",
 		"rune", "string",
 		"uint", "uint16", "uint32", "uint64", "uint8", "uintptr",
+		"any", "comparable",
 	}
 
 	Extra = []string{
@@ -45,18 +46,16 @@ var (
 		"goroutine", "goroutines",
 
 		// https://github.com/golang/go/blob/master/src/cmd/dist/build.go
-		"386", "amd64", "arm", "arm64", "mips", "mipsle", "mips64", "mips64le", "ppc64", "ppc64le", "riscv64", "s390x", "sparc64", "wasm", // GOARCH
+		"386", "amd64", "arm", "arm64", "loong64", "mips", "mipsle", "mips64", "mips64le", "ppc64", "ppc64le", "riscv64", "s390x", "sparc64", "wasm", // GOARCH
 		"darwin", "dragonfly", "illumos", "ios", "js", "linux", "android", "solaris", "freebsd", "nacl", "netbsd", "openbsd", "plan9", "windows", "aix", // GOOS
 
 		"gc", "gccgo", "gcc", "cgo",
 		"go1.1", "go1.2", "go1.3", "go1.4", "go1.5", "go1.6", "go1.7", "go1.8", "go1.9", "go1.10",
-		"go1.11", "go1.12", "go1.13", "go1.14", "go1.15", "go1.16",
+		"go1.11", "go1.12", "go1.13", "go1.14", "go1.15", "go1.16", "go1.17", "go1.18", "go1.19", "go1.20",
 	}
 )
 
-var (
-	DebugF = flag.Bool("debug", false, "Enable debug output")
-)
+var DebugF = flag.Bool("debug", false, "Enable debug output")
 
 func debugf(format string, v ...interface{}) {
 	if *DebugF {
@@ -73,7 +72,7 @@ func addWords(words ...string) {
 
 // processIdent extracts words from ident and adds them to Words.
 func processIdent(ident *ast.Ident) {
-	if ident == nil {
+	if ident == nil || ident.Name == "." {
 		return
 	}
 
